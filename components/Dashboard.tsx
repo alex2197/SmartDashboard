@@ -13,7 +13,7 @@ interface DashboardProps {
 }
 
 // Helper para formatear valores en tooltips de manera type-safe
-const formatCurrency = (value: number | string | Array<number | string> | null | undefined): string => {
+const formatCurrency = (value: any): string => {
   if (typeof value === 'number') {
     return `$${value.toLocaleString('es-MX')}`;
   }
