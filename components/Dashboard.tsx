@@ -12,6 +12,14 @@ interface DashboardProps {
   datosComparacion?: VentaData[];
 }
 
+// Helper para formatear valores en tooltips de manera type-safe
+const formatCurrency = (value: number | string | Array<number | string> | null | undefined): string => {
+  if (typeof value === 'number') {
+    return `$${value.toLocaleString('es-MX')}`;
+  }
+  return String(value || '');
+};
+
 export default function Dashboard({ data, datosComparacion }: DashboardProps) {
   // Calcular métricas principales
   const totalVentas = data.reduce((sum, item) => sum + item.Total, 0);
@@ -202,9 +210,7 @@ export default function Dashboard({ data, datosComparacion }: DashboardProps) {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="mes" />
               <YAxis />
-              <Tooltip 
-                formatter={(value: number) => `$${value.toLocaleString('es-MX')}`}
-              />
+              <Tooltip formatter={formatCurrency} />
               <Line 
                 type="monotone" 
                 dataKey="total" 
@@ -261,9 +267,7 @@ export default function Dashboard({ data, datosComparacion }: DashboardProps) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="nombre" />
                 <YAxis />
-                <Tooltip 
-                  formatter={(value: number) => `$${value.toLocaleString('es-MX')}`}
-                />
+                <Tooltip formatter={formatCurrency} />
                 <Bar dataKey="total" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
@@ -282,9 +286,7 @@ export default function Dashboard({ data, datosComparacion }: DashboardProps) {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis type="number" />
               <YAxis dataKey="nombre" type="category" width={100} />
-              <Tooltip 
-                formatter={(value: number) => `$${value.toLocaleString('es-MX')}`}
-              />
+              <Tooltip formatter={formatCurrency} />
               <Bar dataKey="total" fill="#8884d8">
                 {marcasData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
